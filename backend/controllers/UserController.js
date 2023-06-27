@@ -2,8 +2,7 @@ const User = require("../models/User");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const mongoose = require("mongoose");
+const { default: mongoose } = require("mongoose");
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -22,9 +21,7 @@ const register = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user) {
-    res.status(422).json({
-      errors: ["Este email já existe. Por favor utilize outro e-mail."],
-    });
+    res.status(422).json({ errors: ["Por favor, utilize outro e-mail."] });
     return;
   }
 
@@ -41,9 +38,9 @@ const register = async (req, res) => {
 
   // If user was created sucessfully, return the token
   if (!newUser) {
-    res
-      .status(422)
-      .json({ errors: ["Houve um erro, por favor tente mais tarde."] });
+    res.status(422).json({
+      errors: ["Houve um erro, por favor tente novamente mais tarde."],
+    });
     return;
   }
 
@@ -52,6 +49,14 @@ const register = async (req, res) => {
     token: generateToken(newUser._id),
   });
 };
+
+// Get logged in user
+const getCurrentUser = async (req, res) => {
+  const user = req.user;
+
+  res.status(200).json(user);
+};
+
 // Sign user in
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -60,32 +65,25 @@ const login = async (req, res) => {
 
   // Check if user exists
   if (!user) {
-    res.status(422).json({ errors: ["Usuário não encontrado."] });
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
     return;
   }
 
   // Check if password matches
   if (!(await bcrypt.compare(password, user.password))) {
-    res.status(422).json({ errors: ["Senha inválida."] });
+    res.status(422).json({ errors: ["Senha inválida!"] });
     return;
   }
 
   // Return user with token
-  res.status(201).json({
+  res.status(200).json({
     _id: user._id,
     profileImage: user.profileImage,
     token: generateToken(user._id),
   });
 };
 
-// Get current logged in user
-const getCurrentUser = async (req, res) => {
-  const user = req.user;
-
-  res.status(200).json(user);
-};
-
-// Update an user
+// Update user
 const update = async (req, res) => {
   const { name, password, bio } = req.body;
 
@@ -106,10 +104,8 @@ const update = async (req, res) => {
   }
 
   if (password) {
-    // Generate password hash
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-
     user.password = passwordHash;
   }
 
@@ -122,6 +118,7 @@ const update = async (req, res) => {
   }
 
   await user.save();
+
   res.status(200).json(user);
 };
 
@@ -129,18 +126,14 @@ const update = async (req, res) => {
 const getUserById = async (req, res) => {
   const { id } = req.params;
 
-  try {
-    const user = await User.findById(
-      mongoose.Types.ObjectId(id).select("-password")
-    );
+  const user = await User.findById(mongoose.Types.ObjectId(id)).select(
+    "-password"
+  );
 
-    // Check if user exists
-    if (!user) {
-      res.status(404).json({ errors: ["Usuário não encontrado."] });
-      return;
-    }
-  } catch (error) {
-    res.status(404).json({ errors: ["Usuário não encontrado."] });
+  // Check if user exists
+  if (!user) {
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
+    return;
   }
 
   res.status(200).json(user);
@@ -148,8 +141,8 @@ const getUserById = async (req, res) => {
 
 module.exports = {
   register,
-  login,
   getCurrentUser,
+  login,
   update,
   getUserById,
 };
