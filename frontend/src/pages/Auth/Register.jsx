@@ -10,7 +10,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div id="register">
       <h2>
         React<span>Gram</span>
       </h2>
