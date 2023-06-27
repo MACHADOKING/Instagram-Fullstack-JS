@@ -16,6 +16,7 @@
   position: absolute;
   top: 10px;
   left: 9px;
+  background-color: transparent;
 }
 
 #search-form input {

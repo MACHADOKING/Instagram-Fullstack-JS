@@ -16,7 +16,7 @@ const Navbar = () => {
       <Link to="/">
         React<span>Gram</span>
       </Link>
-      <form>
+      <form id="search-form">
         <BsSearch />
         <input type="text" placeholder="Pesquisar..." />
       </form>
