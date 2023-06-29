@@ -5,7 +5,7 @@ import { upload } from "../../utils/config";
 // packages
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParam } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // components
 import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
