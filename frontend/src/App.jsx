@@ -15,8 +15,6 @@ import Register from "./pages/Auth/Register";
 function App() {
   const { auth, loading } = useAuth();
 
-  console.log(loading);
-
   if (loading) {
     return <p>Carregando...</p>;
   }

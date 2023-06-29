@@ -67,7 +67,6 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.log(action.payload);
         state.user = null;
       })
       .addCase(logout.fulfilled, (state, action) => {
@@ -89,7 +88,6 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.log(action.payload);
         state.user = null;
       });
   },
