@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 // components
 import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
-import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
+import { BsFillEyeFill, BsPencil, BsPencilFill, BsXLg } from "react-icons/bs";
 // redux
 import { getUserDetails } from "../../slices/userSlice";
 import {
@@ -133,7 +133,13 @@ const Profile = () => {
                   />
                 )}
                 {id === userAuth._id ? (
-                  <p>actions</p>
+                  <div className="actions">
+                    <Link to={`/photos/${photo._id}`}>
+                      <BsFillEyeFill />
+                    </Link>
+                    <BsPencilFill />
+                    <BsXLg />
+                  </div>
                 ) : (
                   <Link className="btn" to={`/photos/${photo._id}`}>
                     Ver
