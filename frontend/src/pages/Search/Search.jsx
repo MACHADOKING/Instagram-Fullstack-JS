@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
 import { useQuery } from "../../hooks/useQuery";
 // components
-import LikeContainer from "../../components/LikeContainer";
-import PhotoItem from "../../components/PhotoItem";
+import LikeContainer from "../../components/LikeContainer/LikeContainer";
+import PhotoItem from "../../components/PhotoItem/PhotoItem";
 import { Link } from "react-router-dom";
 // redux
 import { searchPhotos, like } from "../../slices/photoSlice";

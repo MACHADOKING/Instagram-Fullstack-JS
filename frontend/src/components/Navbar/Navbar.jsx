@@ -1,7 +1,6 @@
-// CSS
 import "./Navbar.css";
-// packages
-import React from "react";
+
+// Components
 import { NavLink, Link } from "react-router-dom";
 import {
   BsSearch,
@@ -15,6 +14,7 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 // Redux
 import { logout, reset } from "../../slices/authSlice";
 
@@ -22,11 +22,11 @@ const Navbar = () => {
   const { auth } = useAuth();
   const { user } = useSelector((state) => state.auth);
 
-  const [query, setQuery] = useState("");
-
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const [query, setQuery] = useState("");
 
   const handleLogout = () => {
     dispatch(logout());
@@ -46,13 +46,13 @@ const Navbar = () => {
   return (
     <nav id="nav">
       <Link to="/">
-        React<span>Gram</span>
+        <h2>ReactGram</h2>
       </Link>
-      <form id="search-form" onSubmit={handleSubmit}>
+      <form id="search-form" onSubmit={handleSearch}>
         <BsSearch />
         <input
           type="text"
-          placeholder="Pesquisar..."
+          placeholder="Pesquisar"
           onChange={(e) => setQuery(e.target.value)}
         />
       </form>
@@ -82,15 +82,12 @@ const Navbar = () => {
           </>
         ) : (
           <>
+            {" "}
             <li>
-              <NavLink to="/login">
-                <span>Entrar</span>
-              </NavLink>
+              <NavLink to="/login">Entrar</NavLink>
             </li>
             <li>
-              <NavLink to="/register">
-                <span>Cadastrar</span>
-              </NavLink>
+              <NavLink to="/register">Cadastrar</NavLink>
             </li>
           </>
         )}

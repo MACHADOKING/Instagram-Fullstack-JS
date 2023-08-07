@@ -1,21 +1,23 @@
-// CSS
 import "./Profile.css";
 
 import { upload } from "../../utils/config";
-// packages
-import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+
 // components
 import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
-import { BsFillEyeFill, BsPencil, BsPencilFill, BsXLg } from "react-icons/bs";
-// redux
+import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
+
+// hooks
+import { useEffect, useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+
+// Redux
 import { getUserDetails } from "../../slices/userSlice";
 import {
+  getUserPhotos,
   publishPhoto,
   resetMessage,
-  getUserPhotos,
   deletePhoto,
   updatePhoto,
 } from "../../slices/photoSlice";
@@ -30,43 +32,35 @@ const Profile = () => {
   const {
     photos,
     loading: loadingPhoto,
-    message: messagePhoto,
     error: errorPhoto,
+    message: messagePhoto,
   } = useSelector((state) => state.photo);
 
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
+  const [title, setTitle] = useState();
+  const [image, setImage] = useState();
 
-  const [editId, setEditId] = useState("");
-  const [editImage, setEditImage] = useState("");
-  const [editTitle, setEditTitle] = useState("");
+  const [editId, setEditId] = useState();
+  const [editImage, setEditImage] = useState();
+  const [editTitle, setEditTitle] = useState();
 
-  // new form and edit form refs
+  // New form and edit form refs
   const newPhotoForm = useRef();
   const editPhotoForm = useRef();
 
-  // load user data
+  // Load user data
   useEffect(() => {
     dispatch(getUserDetails(id));
     dispatch(getUserPhotos(id));
   }, [dispatch, id]);
 
-  const handleFile = (e) => {
-    const image = e.target.files[0];
-
-    setImage(image);
-  };
-
-  if (loading) {
-    return <p>Carregando...</p>;
-  }
-
-  const resetComponentMessage = () => {
+  // Reset component message
+  function resetComponentMessage() {
     setTimeout(() => {
       dispatch(resetMessage());
     }, 2000);
-  };
+  }
 
+  // Publish a new photo
   const submitHandle = (e) => {
     e.preventDefault();
 
@@ -91,20 +85,43 @@ const Profile = () => {
     resetComponentMessage();
   };
 
-  // delete a photo
+  // change image state
+  const handleFile = (e) => {
+    const image = e.target.files[0];
+
+    setImage(image);
+  };
+
+  // Exclude an image
   const handleDelete = (id) => {
     dispatch(deletePhoto(id));
 
     resetComponentMessage();
   };
 
-  // show or hide forms
-  const hideOrShowForms = () => {
+  // Show or hide forms
+  function hideOrShowForms() {
     newPhotoForm.current.classList.toggle("hide");
     editPhotoForm.current.classList.toggle("hide");
+  }
+
+  // Show edit form
+  const handleEdit = (photo) => {
+    if (editPhotoForm.current.classList.contains("hide")) {
+      hideOrShowForms();
+    }
+
+    setEditId(photo._id);
+    setEditImage(photo.image);
+    setEditTitle(photo.title);
   };
 
-  // update a photo
+  // Cancel editing
+  const handleCancelEdit = () => {
+    hideOrShowForms();
+  };
+
+  // Update photo title
   const handleUpdate = (e) => {
     e.preventDefault();
 
@@ -118,19 +135,9 @@ const Profile = () => {
     resetComponentMessage();
   };
 
-  const handleEdit = (photo) => {
-    if (editPhotoForm.current.classList.contains("hide")) {
-      hideOrShowForms();
-    }
-
-    setEditId(photo._id);
-    setEditTitle(photo.title);
-    setEditImage(photo.image);
-  };
-
-  const handleCancelEdit = () => {
-    hideOrShowForms();
-  };
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <div id="profile">
@@ -152,7 +159,7 @@ const Profile = () => {
                 <span>Título para a foto:</span>
                 <input
                   type="text"
-                  placeholder="Insira um título..."
+                  placeholder="Insira um título"
                   onChange={(e) => setTitle(e.target.value)}
                   value={title || ""}
                 />
@@ -185,7 +192,7 @@ const Profile = () => {
             </form>
           </div>
           {errorPhoto && <Message msg={errorPhoto} type="error" />}
-          {messagePhoto && <Message msg={messagePhoto} type="sucess" />}
+          {messagePhoto && <Message msg={messagePhoto} type="success" />}
         </>
       )}
       <div className="user-photos">
@@ -215,7 +222,7 @@ const Profile = () => {
                 )}
               </div>
             ))}
-          {photos.length === 0 && <p>Ainda não há fotos publicadas</p>}
+          {photos.length === 0 && <p>Ainda não há fotos publicadas...</p>}
         </div>
       </div>
     </div>
