@@ -3,9 +3,9 @@ import "./Photo.css";
 import { uploads } from "../../utils/config";
 
 // components
-import Message from "../../components/Message";
-import PhotoItem from "../../components/PhotoItem";
-import LikeContainer from "../../components/LikeContainer";
+import Message from "../../components/Message/Message";
+import PhotoItem from "../../components/PhotoItem/PhotoItem";
+import LikeContainer from "../../components/LikeContainer/LikeContainer";
 import { Link } from "react-router-dom";
 
 // hooks
