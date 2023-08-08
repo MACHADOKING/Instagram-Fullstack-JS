@@ -7,14 +7,14 @@ import { useAuth } from "./hooks/useAuth";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // components
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 // pages
 import Home from "./pages/Home/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import EditProfile from "./components/EditProfile/EditProfile";
+import EditProfile from "./pages/EditProfile/EditProfile";
 import Profile from "./pages/Profile/Profile";
 import Photo from "./pages/Photo/Photo";
 import Search from "./pages/Search/Search";

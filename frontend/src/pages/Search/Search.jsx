@@ -1,15 +1,17 @@
-// CSS
 import "./Search.css";
+
 // hooks
+import { useQuery } from "../../hooks/useQuery";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
-import { useQuery } from "../../hooks/useQuery";
+
 // components
-import LikeContainer from "../../components/LikeContainer/LikeContainer";
-import PhotoItem from "../../components/PhotoItem/PhotoItem";
+import LikeContainer from "../../components/LikeContainer";
+import PhotoItem from "../../components/PhotoItem";
 import { Link } from "react-router-dom";
-// redux
+
+// Redux
 import { searchPhotos, like } from "../../slices/photoSlice";
 
 const Search = () => {
@@ -23,13 +25,12 @@ const Search = () => {
   const { user } = useSelector((state) => state.auth);
   const { photos, loading } = useSelector((state) => state.photo);
 
-  //load photos
+  // Load all photos
   useEffect(() => {
     dispatch(searchPhotos(search));
   }, [dispatch, search]);
 
-  // like a photo
-  const handleLike = (photo) => {
+  const handleLike = (photo = null) => {
     dispatch(like(photo._id));
 
     resetMessage();
@@ -52,11 +53,6 @@ const Search = () => {
             </Link>
           </div>
         ))}
-      {photos && photos.length === 0 && (
-        <h2 className="no-photos">
-          Não foram encontrados resultados para sua busca...
-        </h2>
-      )}
     </div>
   );
 };

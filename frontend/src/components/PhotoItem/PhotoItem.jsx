@@ -1,15 +1,14 @@
-// CSS
 import "./PhotoItem.css";
-// packages
-import React from "react";
-import { upload } from "../../utils/config";
+
+import { uploads } from "../utils/config";
+
 import { Link } from "react-router-dom";
 
 const PhotoItem = ({ photo }) => {
   return (
     <div className="photo-item">
       {photo.image && (
-        <img src={`${upload}/photos/${photo.image}`} alt={photo.title} />
+        <img src={`${uploads}/photos/${photo.image}`} alt={photo.title} />
       )}
       <h2>{photo.title}</h2>
       <p className="photo-author">

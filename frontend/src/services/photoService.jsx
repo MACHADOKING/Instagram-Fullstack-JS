@@ -1,6 +1,6 @@
 import { api, requestConfig } from "../utils/config";
 
-// publish an user photo
+// Publish an user's photo
 const publishPhoto = async (data, token) => {
   const config = requestConfig("POST", data, token, true);
 
@@ -8,41 +8,59 @@ const publishPhoto = async (data, token) => {
     const res = await fetch(api + "/photos", config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// get user photos
-const getUserPhotos = async (id, token) => {
-  const config = requestConfig("GET", null, token);
+// Get user photos
+const getUserPhotos = async (id) => {
+  const config = requestConfig("GET");
 
   try {
-    const res = await fetch(api + "/photos/users/" + id, config)
+    const res = await fetch(api + "/photos/user/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// delete a photo
-const deletePhoto = async (id, token) => {
-  const config = requestConfig("DELETE", null, token);
+// Get photo
+const getPhoto = async (id) => {
+  const config = requestConfig("GET");
 
   try {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// update a photo
+// Delete a photo
+const deletePhoto = async (id, token) => {
+  const config = requestConfig("DELETE", "", token);
+
+  try {
+    const res = await fetch(api + "/photos/" + id, config)
+      .then((res) => res.json())
+      .catch((err) => err);
+
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Update a photo
 const updatePhoto = async (data, id, token) => {
   const config = requestConfig("PUT", data, token);
 
@@ -50,27 +68,14 @@ const updatePhoto = async (data, id, token) => {
     const res = await fetch(api + "/photos/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// get a photo by id
-const getPhoto = async (id, token) => {
-  const config = requestConfig("GET", null, token);
-
-  try {
-    const res = await fetch(api + "/photos/" + id, config)
-      .then((res) => res.json())
-      .catch((err) => err);
-    return res;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// like a photo
+// Like a photo
 const like = async (id, token) => {
   const config = requestConfig("PUT", null, token);
 
@@ -78,20 +83,22 @@ const like = async (id, token) => {
     const res = await fetch(api + "/photos/like/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// Add comment to a photo
+// Add a comment to a photo
 const comment = async (data, id, token) => {
   const config = requestConfig("PUT", data, token);
 
   try {
-    const res = await fetch(api + "/photos/comment" + id, config)
+    const res = await fetch(api + "/photos/comment/" + id, config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
@@ -99,27 +106,29 @@ const comment = async (data, id, token) => {
 };
 
 // Get all photos
-const getPhotos = async (token) => {
-  const config = requestConfig("GET", null, token);
+const getPhotos = async () => {
+  const config = requestConfig("GET");
 
   try {
     const res = await fetch(api + "/photos", config)
-      .then((res = res.json()))
+      .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// search photo by title
-const searchPhotos = async (query, token) => {
-  const config = requestConfig("GET", null, token);
+// Search photos by title
+const searchPhotos = async (query) => {
+  const config = requestConfig("GET");
 
   try {
     const res = await fetch(api + "/photos/search?q=" + query, config)
       .then((res) => res.json())
       .catch((err) => err);
+
     return res;
   } catch (error) {
     console.log(error);
@@ -129,9 +138,9 @@ const searchPhotos = async (query, token) => {
 const photoService = {
   publishPhoto,
   getUserPhotos,
+  getPhoto,
   deletePhoto,
   updatePhoto,
-  getPhoto,
   like,
   comment,
   getPhotos,

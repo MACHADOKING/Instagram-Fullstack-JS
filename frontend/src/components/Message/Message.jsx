@@ -1,7 +1,4 @@
-// CSS
 import "./Message.css";
-// packages
-import React from "react";
 
 const Message = ({ msg, type }) => {
   return (

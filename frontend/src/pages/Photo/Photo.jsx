@@ -1,16 +1,20 @@
-// CSS
 import "./Photo.css";
-// packages
-import { useEffect, useState } from "react";
-import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
+
+import { uploads } from "../../utils/config";
+
 // components
-import Message from "../../components/Message/Message";
-import { Link, useParams } from "react-router-dom";
-import PhotoItem from "../../components/PhotoItem/PhotoItem";
-import LikeContainer from "../../components/LikeContainer/LikeContainer";
-// Redux
+import Message from "../../components/Message";
+import PhotoItem from "../../components/PhotoItem";
+import LikeContainer from "../../components/LikeContainer";
+import { Link } from "react-router-dom";
+
+// hooks
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { upload } from "../../utils/config";
+import { useParams } from "react-router-dom";
+import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
+
+// Redux
 import { getPhoto, like, comment } from "../../slices/photoSlice";
 
 const Photo = () => {
@@ -25,14 +29,14 @@ const Photo = () => {
     (state) => state.photo
   );
 
-  const [commentText, setCommentText] = useState("");
+  const [commentText, setCommentText] = useState();
 
-  // load photo data
+  // Load photo data
   useEffect(() => {
     dispatch(getPhoto(id));
   }, [dispatch, id]);
 
-  // Insert a like
+  // Like a photo
   const handleLike = () => {
     dispatch(like(photo._id));
 
@@ -43,12 +47,12 @@ const Photo = () => {
   const handleComment = (e) => {
     e.preventDefault();
 
-    const commentData = {
+    const photoData = {
       comment: commentText,
       id: photo._id,
     };
 
-    dispatch(comment(commentData));
+    dispatch(comment(photoData));
 
     setCommentText("");
 
@@ -65,12 +69,12 @@ const Photo = () => {
       <LikeContainer photo={photo} user={user} handleLike={handleLike} />
       <div className="message-container">
         {error && <Message msg={error} type="error" />}
-        {message && <Message msg={message} type="sucess" />}
+        {message && <Message msg={message} type="success" />}
       </div>
       <div className="comments">
         {photo.comments && (
           <>
-            <h3>Comentários: ({photo.comments.length})</h3>
+            <h3>Comentários ({photo.comments.length}):</h3>
             <form onSubmit={handleComment}>
               <input
                 type="text"
@@ -80,15 +84,13 @@ const Photo = () => {
               />
               <input type="submit" value="Enviar" />
             </form>
-            {photo.comments.length === 0 && (
-              <p>Não há comentários para exibir...</p>
-            )}
+            {photo.comments.length === 0 && <p>Não há comentários...</p>}
             {photo.comments.map((comment) => (
               <div className="comment" key={comment.comment}>
                 <div className="author">
                   {comment.userImage && (
                     <img
-                      src={`${upload}/users/${comment.userImage}`}
+                      src={`${uploads}/users/${comment.userImage}`}
                       alt={comment.userName}
                     />
                   )}

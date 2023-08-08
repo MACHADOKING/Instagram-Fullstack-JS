@@ -1,14 +1,16 @@
-// CSS
 import "./Home.css";
+
 // components
-import LikeContainer from "../../components/LikeContainer/LikeContainer";
-import PhotoItem from "../../components/PhotoItem/PhotoItem";
+import LikeContainer from "../../components/LikeContainer";
+import PhotoItem from "../../components/PhotoItem";
 import { Link } from "react-router-dom";
+
 // hooks
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useResetComponentMessage } from "../../hooks/useResetComponentMessage";
-// redux
+
+// Redux
 import { getPhotos, like } from "../../slices/photoSlice";
 
 const Home = () => {
@@ -24,8 +26,7 @@ const Home = () => {
     dispatch(getPhotos());
   }, [dispatch]);
 
-  // Like a photo
-  const handleLike = (photo) => {
+  const handleLike = (photo = null) => {
     dispatch(like(photo._id));
 
     resetMessage();
@@ -50,7 +51,7 @@ const Home = () => {
       {photos && photos.length === 0 && (
         <h2 className="no-photos">
           Ainda não há fotos publicadas,{" "}
-          <Link to={`/users/${user._id}`}>Seja o primeiro a publicar.</Link>
+          <Link to={`/users/${user.userId}`}>clique aqui</Link> para começar.
         </h2>
       )}
     </div>

@@ -1,11 +1,13 @@
-// CSS
 import "./Auth.css";
+
 // Components
-import Message from "../../components/Message/Message";
-// packages
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Message from "../../components/Message";
+
+// Hooks
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 // Redux
 import { register, reset } from "../../slices/authSlice";
 
@@ -41,41 +43,39 @@ const Register = () => {
 
   return (
     <div id="register">
-      <h2>
-        React<span>Gram</span>
-      </h2>
+      <h2>ReactGram</h2>
       <p className="subtitle">Cadastre-se para ver as fotos dos seus amigos.</p>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Nome"
           onChange={(e) => setName(e.target.value)}
-          value={name || ""}
+          value={name}
         />
         <input
           type="email"
           placeholder="E-mail"
           onChange={(e) => setEmail(e.target.value)}
-          value={email || ""}
+          value={email}
         />
         <input
           type="password"
           placeholder="Senha"
           onChange={(e) => setPassword(e.target.value)}
-          value={password || ""}
+          value={password}
         />
         <input
           type="password"
-          placeholder="Confirme a sua senha"
+          placeholder="Confirme a senha"
           onChange={(e) => setConfirmPassword(e.target.value)}
-          value={confirmPassword || ""}
+          value={confirmPassword}
         />
         {!loading && <input type="submit" value="Cadastrar" />}
-        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {loading && <input type="submit" disabled value="Aguarde..." />}
         {error && <Message msg={error} type="error" />}
       </form>
       <p>
-        Já tem uma conta? <Link to="/login">Clique aqui.</Link>
+        Já tem conta? <Link to="/login">Clique aqui</Link>
       </p>
     </div>
   );

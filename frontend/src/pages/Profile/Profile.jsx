@@ -1,9 +1,9 @@
 import "./Profile.css";
 
-import { upload } from "../../utils/config";
+import { uploads } from "../../utils/config";
 
 // components
-import Message from "../../components/Message/Message";
+import Message from "../../components/Message";
 import { Link } from "react-router-dom";
 import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
 
@@ -143,7 +143,7 @@ const Profile = () => {
     <div id="profile">
       <div className="profile-header">
         {user.profileImage && (
-          <img src={`${upload}/users/${user.profileImage}`} alt={user.name} />
+          <img src={`${uploads}/users/${user.profileImage}`} alt={user.name} />
         )}
         <div className="profile-description">
           <h2>{user.name}</h2>
@@ -177,7 +177,7 @@ const Profile = () => {
           <div className="edit-photo hide" ref={editPhotoForm}>
             <p>Editando:</p>
             {editImage && (
-              <img src={`${upload}/photos/${editImage}`} alt={editTitle} />
+              <img src={`${uploads}/photos/${editImage}`} alt={editTitle} />
             )}
             <form onSubmit={handleUpdate}>
               <input
@@ -203,7 +203,7 @@ const Profile = () => {
               <div className="photo" key={photo._id}>
                 {photo.image && (
                   <img
-                    src={`${upload}/photos/${photo.image}`}
+                    src={`${uploads}/photos/${photo.image}`}
                     alt={photo.title}
                   />
                 )}

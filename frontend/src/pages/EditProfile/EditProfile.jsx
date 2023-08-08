@@ -1,16 +1,18 @@
-// CSS
 import "./EditProfile.css";
-// utils
-import { upload } from "../../utils/config";
-// packages
+
+import { uploads } from "../../utils/config";
+
+// Hooks
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// redux
-import { profile, resetMessage, updateProfile } from "../../slices/userSlice";
-// components
-import Message from "../../components/Message/Message";
 
-const EditProfile = () => {
+// Redux
+import { profile, updateProfile, resetMessage } from "../../slices/userSlice";
+
+// Components
+import Message from "../../components/Message";
+
+const Profile = () => {
   const dispatch = useDispatch();
 
   const { user, message, error, loading } = useSelector((state) => state.user);
@@ -22,12 +24,12 @@ const EditProfile = () => {
   const [bio, setBio] = useState("");
   const [previewImage, setPreviewImage] = useState("");
 
-  // load user data
+  // Load user data
   useEffect(() => {
     dispatch(profile());
   }, [dispatch]);
 
-  // fill form with user data
+  // fill user form
   useEffect(() => {
     if (user) {
       setName(user.name);
@@ -39,7 +41,7 @@ const EditProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // gather user data from states
+    // Gather user data from states
     const userData = {
       name,
     };
@@ -65,7 +67,7 @@ const EditProfile = () => {
 
     formData.append("user", userFormData);
 
-    await dispatch(updateProfile(userFormData));
+    await dispatch(updateProfile(formData));
 
     setTimeout(() => {
       dispatch(resetMessage());
@@ -77,7 +79,8 @@ const EditProfile = () => {
     const image = e.target.files[0];
 
     setPreviewImage(image);
-    // update image state
+
+    // change image state
     setProfileImage(image);
   };
 
@@ -85,7 +88,7 @@ const EditProfile = () => {
     <div id="edit-profile">
       <h2>Edite seus dados</h2>
       <p className="subtitle">
-        Adicione uma imagem de perfil e conte mais sobre você...
+        Adicione uma imagem de perfil, e conte mais um pouco sobre você...
       </p>
       {(user.profileImage || previewImage) && (
         <img
@@ -93,7 +96,7 @@ const EditProfile = () => {
           src={
             previewImage
               ? URL.createObjectURL(previewImage)
-              : `${upload}/users/${user.profileImage}`
+              : `${uploads}/users/${user.profileImage}`
           }
           alt={user.name}
         />
@@ -123,18 +126,18 @@ const EditProfile = () => {
           <span>Quer alterar sua senha?</span>
           <input
             type="password"
-            placeholder="Digite sua nova senha"
+            placeholder="Digite sua nova senha..."
             onChange={(e) => setPassword(e.target.value)}
             value={password || ""}
           />
         </label>
         {!loading && <input type="submit" value="Atualizar" />}
-        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {loading && <input type="submit" disabled value="Aguarde..." />}
         {error && <Message msg={error} type="error" />}
-        {message && <Message msg={message} type="sucess" />}
+        {message && <Message msg={message} type="success" />}
       </form>
     </div>
   );
 };
 
-export default EditProfile;
+export default Profile;

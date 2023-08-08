@@ -1,6 +1,6 @@
 import { api, requestConfig } from "../utils/config";
 
-// Register an user
+// Register a user
 const register = async (data) => {
   const config = requestConfig("POST", data);
 
@@ -10,20 +10,21 @@ const register = async (data) => {
       .catch((err) => err);
 
     if (res) {
-      localStorage.setItem("users", JSON.stringify(res));
+      localStorage.setItem("user", JSON.stringify(res));
     }
+
     return res;
   } catch (error) {
     console.log(error);
   }
 };
 
-// Logout an user
+// Logout a user
 const logout = () => {
   localStorage.removeItem("user");
 };
 
-// Sign in an user
+// Sign in a user
 const login = async (data) => {
   const config = requestConfig("POST", data);
 
@@ -32,9 +33,10 @@ const login = async (data) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    if (res._id) {
+    if (res) {
       localStorage.setItem("user", JSON.stringify(res));
     }
+
     return res;
   } catch (error) {
     console.log(error);

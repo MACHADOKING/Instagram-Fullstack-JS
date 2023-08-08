@@ -1,6 +1,5 @@
-// CSS
 import "./LikeContainer.css";
-import React from "react";
+
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 
 const LikeContainer = ({ photo, user, handleLike }) => {
@@ -13,7 +12,7 @@ const LikeContainer = ({ photo, user, handleLike }) => {
           ) : (
             <BsHeart onClick={() => handleLike(photo)} />
           )}
-          <p>{photo.likes.length} likes(s)</p>
+          <p>{photo.likes.length} like(s)</p>
         </>
       )}
     </div>

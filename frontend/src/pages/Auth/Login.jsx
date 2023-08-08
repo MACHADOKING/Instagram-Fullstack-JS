@@ -1,11 +1,13 @@
-// CSS
 import "./Auth.css";
+
 // Components
 import { Link } from "react-router-dom";
-import Message from "../../components/Message/Message";
-// hooks
+import Message from "../../components/Message";
+
+// Hooks
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 // Redux
 import { login, reset } from "../../slices/authSlice";
 
@@ -25,6 +27,8 @@ const Login = () => {
       password,
     };
 
+    console.log(user);
+
     dispatch(login(user));
   };
 
@@ -35,25 +39,23 @@ const Login = () => {
 
   return (
     <div id="login">
-      <h2>
-        React<span>Gram</span>
-      </h2>
+      <h2>ReactGram</h2>
       <p className="subtitle">Faça o login para ver o que há de novo.</p>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="E-mail"
           onChange={(e) => setEmail(e.target.value)}
-          value={email || ""}
+          value={email}
         />
         <input
           type="password"
           placeholder="Senha"
           onChange={(e) => setPassword(e.target.value)}
-          value={password || ""}
+          value={password}
         />
         {!loading && <input type="submit" value="Entrar" />}
-        {loading && <input type="submit" value="Aguarde..." disabled />}
+        {loading && <input type="submit" disabled value="Aguarde..." />}
         {error && <Message msg={error} type="error" />}
       </form>
       <p>
