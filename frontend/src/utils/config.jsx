@@ -1,5 +1,5 @@
-export const api = "https://reactgram-fullstack.vercel.app/api";
-export const uploads = "https://reactgram-fullstack.vercel.app/uploads";
+export const api = "https://instagram-fullstack-js.vercel.app/api";
+export const uploads = "https://instagram-fullstack-js.vercel.app/uploads";
 
 export const requestConfig = (method, data, token = null, image = null) => {
   let config;
