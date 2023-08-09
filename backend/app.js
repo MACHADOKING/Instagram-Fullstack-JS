@@ -26,10 +26,7 @@ app.use((req, res, next) => {
 
 // Solve cors
 app.use(
-  cors({
-    credentials: true,
-    origin: ["https://reactgram-fullstack.vercel.app"],
-  })
+  cors({ credentials: true, origin: "https://reactgram-fullstack.vercel.app" })
 );
 
 // Upload directory
