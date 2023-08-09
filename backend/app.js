@@ -24,10 +24,19 @@ app.use(express.urlencoded({ extended: false }));
 //   next();
 // });
 
-// Solve cors
 app.use(
-  cors({ credentials: true, origin: "https://reactgram-fullstack.vercel.app" })
+  cors({
+    credentials: true,
+    origin: "https://reactgram-fullstack.vercel.app",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
 );
+
+// Solve cors
+// app.use(
+//   cors({ credentials: true, origin: "https://reactgram-fullstack.vercel.app" })
+// );
 
 // Upload directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
