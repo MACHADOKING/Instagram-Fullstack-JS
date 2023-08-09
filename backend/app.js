@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const authGuard = require("./middlewares/authGuard");
 
 const port = process.env.PORT || 9001;
 
@@ -25,7 +26,10 @@ app.use((req, res, next) => {
 
 // Solve cors
 app.use(
-  cors({ credentials: true, origin: "https://reactgram-fullstack.vercel.app" })
+  cors({
+    credentials: true,
+    origin: ["https://reactgram-fullstack.vercel.app"],
+  })
 );
 
 // Upload directory
@@ -36,6 +40,8 @@ require("./config/db.js");
 
 // routes
 const router = require("./routes/Router.js");
+
+router.use(authGuard);
 
 app.use(router);
 
